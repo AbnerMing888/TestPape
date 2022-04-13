@@ -1,7 +1,7 @@
 # TestPape
 一个简单的H5模拟试卷，包含了单选，多选和填空。
 
-#### 欢迎关注我的微信公众号：(微信扫一扫)<br/>
+#### 欢迎关注我的微信公众号：二流小码农，(微信扫一扫)<br/>
 <img src="images/code_er.jpg" width="120" height="120" alt="微信公众号"/><br/>
 ## Demo效果预览<br/>
 <img src="images/pc.jpg" width="600" alt="pc效果"/><br/>
