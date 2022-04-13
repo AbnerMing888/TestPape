@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Android电商实战理论模拟题</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .div_all {
+            width: 100%;
+            height: 100%;
+            min-width: 1200px;
+            margin-bottom: 50px;
+        }
+
+        .div_all_title {
+            width: 100%;
+            height: 60px;
+            text-align: center;
+            line-height: 60px;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .div_all_ke {
+            width: 80%;
+            height: 40px;
+            margin-left: 10%;
+            border: 1px solid #999999;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .div_all_selected, .div_all_more, .div_all_input {
+            width: 80%;
+            margin-left: 10%;
+        }
+
+        .div_radio div {
+            height: 30px;
+        }
+
+        .div_all_top {
+            width: 100%;
+            min-width: 1200px;
+            position: fixed;
+            top: 0px;
+            background-color: #FFFFFF;
+        }
+
+        .div_span_submit {
+            margin-left: 5%;
+            color: #ff0000;
+            font-weight: bold;
+            border: 1px solid #ff0000;
+            padding: 1px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .div_span_submit:hover {
+            background-color: #d43c3c;
+            color: #FFFFFF;
+        }
+
+        .div_input_text_area textarea {
+            width: 100%;
+            height: 50px;
+            resize: none;
+        }
+
+        .div_buttom {
+            width: 91%;
+            margin-left: 4.5%;
+            height: 30px;
+            background-color: #222222;
+            position: fixed;
+            bottom: 0px;
+            border: 1px solid #999999;
+            min-width: 1240px;
+        }
+
+        .div_buttom div {
+            float: left;
+        }
+
+        .div_mei_span {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #FFFFFF;
+            font-size: 6px;
+            text-align: center;
+            line-height: 20px;
+            margin-left: 5px;
+            margin-top: 5px;
+            float: left;
+            cursor: pointer;
+            color: #FFFFFF;
+        }
+
+        .div_mei_span_yes {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #FFFFFF;
+            background-color: #FFFFFF;
+            font-size: 6px;
+            text-align: center;
+            line-height: 20px;
+            margin-left: 5px;
+            margin-top: 5px;
+            float: left;
+            cursor: pointer;
+            color: #222222;
+        }
+    </style>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            var allLength = 0;
+            var twoLength = 0;
+            var threeLength = 0;
+            $.get("a.txt", function (data, status) {
+                var json = JSON.parse(data);
+                var item = json.one;
+                allLength = item.length;//获取总的个数
+                var itemTwo = json.two;
+                var itemThree = json.three;
+                threeLength = json.three.length;
+                twoLength = itemTwo.length;
+                $(".div_all_selected").empty();
+                $.each(item, function (i, bean) {
+                    var node = document.createElement("div");
+                    node.setAttribute("class", "div_selected_con");
+                    node.innerHTML = "<div class='div_radio'>" +
+                        "<h4><a name='selected'" + i + ">" + bean.title + "</a></h4>" +
+                        "<div><input type='radio' value='A' name='" + bean.biao + "' /><span>" + bean.a + "</span></div>" +
+                        "<div><input type='radio' value='B'name='" + bean.biao + "' /><span>" + bean.b + "</span></div>" +
+                        "<div><input type='radio' value='C' name='" + bean.biao + "' /><span>" + bean.c + "</span></div>" +
+                        "<div><input type='radio' value='D' name='" + bean.biao + "' /><span>" + bean.d + "</span></div>" +
+                        "</div>";
+                    $(".div_all_selected").append(node);
+
+                });
+
+                $(".div_all_more").empty();
+                $.each(itemTwo, function (i, bean) {
+                    var node = document.createElement("div");
+                    node.setAttribute("class", "div_selected_con");
+                    node.innerHTML = "<div class='div_radio'>" +
+                        "<h4><a name='selected_two'" + i + ">" + bean.title + "</a></h4>" +
+                        "<div><input type='checkbox' value='A' name='" + bean.biao + "' /><span>" + bean.a + "</span></div>" +
+                        "<div><input type='checkbox' value='B'name='" + bean.biao + "' /><span>" + bean.b + "</span></div>" +
+                        "<div><input type='checkbox' value='C'name='" + bean.biao + "' /><span>" + bean.c + "</span></div>" +
+                        "<div><input type='checkbox' value='D'name='" + bean.biao + "' /><span>" + bean.d + "</span></div>" +
+                        "</div>";
+                    $(".div_all_more").append(node);
+
+                });
+
+                $(".div_all_input").empty();
+                $.each(itemThree, function (i, bean) {
+                    var node = document.createElement("div");
+                    node.setAttribute("class", "div_selected_con");
+                    node.innerHTML = "<div class='div_input_text_area'>" +
+                        "<h4 ><a name='selected_three'" + i + ">" + bean.title + "</a></h4>" +
+                        "<div><textarea placeholder='请输入您的答案……' class='text_area" + i + "'></textarea></div>" +
+                        "</div>";
+                    $(".div_all_input").append(node);
+                });
+
+            });
+
+
+            $(".div_span_submit").click(function () {
+                //提交
+                var arrNum = "";
+                var arr = new Array();
+                for (var i = 0; i < allLength; i++) {
+                    var one_1 = $("input[name='one_" + i + "']:checked").val();
+                    if (one_1 == null) {
+                        arrNum = arrNum + (i + 1) + ",";//记录那一道题没有做
+                    } else {
+                        arr[i] = one_1;//不等于空，记录点击的答案
+                    }
+                }
+
+                var valueTwoArr = [];//定义一个数组
+                if (arrNum != "") {
+                    alert("老铁，单选题，第" + arrNum + "道题，你做了吗");
+                } else {
+                    var valueAll = [];//定义一个数组
+                    for (var a = 0; a < twoLength; a++) {
+                        //jquery获取复选框值
+                        var chk_value = [];//定义一个数组
+                        $("input[name='two_" + a + "']:checked").each(function () {//遍历每一个名字为interest的复选框，其中选中的执行函数
+                            var value = $(this).val();
+                            chk_value.push(value);//将选中的值添加到数组chk_value中
+                        });
+                        if (chk_value == "") {
+                            valueAll.push((a + 1));
+                        } else {
+                            valueTwoArr[a] = chk_value;
+                        }
+                    }
+
+
+                    if (valueAll != "") {
+                        alert("老铁，多选题，第" + valueAll + "道题，你做了吗");
+                        return;
+                    }
+
+                    var textArrAy = [];
+                    var textArrAyMessage = [];
+                    for (var m = 0; m < threeLength; m++) {
+                        var text = $(".text_area" + m).val();
+                        if (text == null || text == "") {
+                            //为空
+                            textArrAy.push((m + 1));
+                        } else {
+                            textArrAyMessage.push(text);
+                        }
+
+                    }
+
+                    if (textArrAy != "") {
+                        alert("老铁，填空题，第" + textArrAy + "道题，你做了吗");
+                        return;
+                    }
+
+
+                    //全部做完，进行提交
+                    var price = 0;
+                    for (var i = 0; i < arr.length; i++) {
+                        var an = arr[i];
+                        var ok = anItem[i].ok;
+                        if (ok == an) {
+                            price = price + 2.5;
+                        }
+                    }
+
+                    for (var p = 0; p < twoItem.length; p++) {
+                        var ok = twoItem[p].ok;
+                        var twoOk = valueTwoArr[p];
+                        if (ok == twoOk) {
+                            price = price + 2.5;
+                        }
+
+                    }
+
+                    //计算填空
+                    for (var h = 0; h < textArrAyMessage.length; h++) {
+                        var message = textArrAyMessage[h];
+                        var ok = threeItem[h].ok;
+                        var okArr = ok.split("-");
+                        var msgLength = 0;
+                        var len = okArr.length;
+                        for (var k = 0; k < len; k++) {
+                            var msg = okArr[k];
+                            if (message.indexOf(msg) != -1) {//包含
+                                msgLength++;
+                            }
+                        }
+                        if (msgLength == len) {//都包含
+                            price = price + 2.5;
+                        } else if (msgLength == 0) {
+                            price = price + 0;
+                        } else {
+                            if (len - msgLength == 1) {
+                                price = price + 2;
+                            } else if (len - msgLength == 2) {
+                                price = price + 1.5;
+                            } else if (len - msgLength == 3) {
+                                price = price + 1;
+                            } else {
+                                price = price + 0;
+                            }
+                        }
+                    }
+
+
+                    //提交
+                    var name = $(".user_name").val();
+                    if (name == null || name == "") {
+                        alert("老铁，你的名字写了没");
+                        return;
+                    }
+                    var user_student = $(".user_student").val();
+                    if (user_student == null || user_student == "") {
+                        alert("老铁，学号填了没~");
+                        return;
+                    }
+
+                    var value = $('.select_class option:selected').val();//选中的值
+
+                    var title = $(".div_all_title").text();
+                    var url = "../../../cert/vip_add_yue.php";
+
+                    var date = new Date();
+                    var year = date.getFullYear(); //获取完整的年份(4位)
+                    var month = date.getMonth(); //获取当前月份(0-11,0代表1月)
+                    var date = date.getDate(); //获取当前日(1-31)
+                    var dd = year + "-" + (month + 1) + "-" + date;
+                    $.post(url, {
+                        fen_name: name,
+                        fen_class: value,
+                        fen_num: user_student,
+                        fen_sorce: price+"",
+                        fen_type: title,
+                        fen_time: dd,
+                    }, function (data, status) {
+                        if(data.status==0){
+                             window.location = "vip_ming_list.html";
+                        }
+                    });
+
+                }
+
+            });
+
+            getAn();
+            var anItem;
+            var twoItem;
+            var threeItem;
+
+            function getAn() {
+                $.get("an.txt", function (data, status) {
+                    var data = JSON.parse(data);
+                    anItem = data.an;
+                    twoItem = data.an_two;
+                    threeItem = data.an_three;
+                });
+            }
+
+            setTimeout(function () {
+                notifyItem("", "", "");
+            }, 300);
+
+
+            setInterval(function () {
+                ding();
+            }, 500);
+
+
+            function ding() {
+                //提交
+                var arrNum = "";
+                var arr = new Array();
+                for (var i = 0; i < allLength; i++) {
+                    var one_1 = $("input[name='one_" + i + "']:checked").val();
+                    if (one_1 == null) {
+
+                    } else {
+                        arr[i] = one_1;
+                        arrNum = arrNum + (i) + ",";
+                    }
+                }
+
+                //多选
+                var valueAll = [];//定义一个数组
+                for (var a = 0; a < twoLength; a++) {
+                    //jquery获取复选框值
+                    var chk_value = [];//定义一个数组
+                    $("input[name='two_" + a + "']:checked").each(function () {//遍历每一个名字为interest的复选框，其中选中的执行函数
+                        var value = $(this).val();
+                        chk_value.push(value);//将选中的值添加到数组chk_value中
+                    });
+                    if (chk_value == "") {
+
+                    } else {
+                        valueAll.push(a);
+                    }
+                }
+
+                //填空题
+
+                var textArrAy = [];
+                var textArrAyMessage = [];
+                for (var m = 0; m < threeLength; m++) {
+                    var text = $(".text_area" + m).val();
+                    if (text == null || text == "") {
+                        //为空
+
+                    } else {
+                        textArrAyMessage.push(text);
+                        textArrAy.push(m);
+                    }
+
+                }
+                notifyItem(arrNum, valueAll.toString(), textArrAy.toString());
+
+            }
+
+
+            function notifyItem(str, str2, str3) {
+                var divMei = document.createElement("div");
+                $(".div_buttom_selected").empty();
+
+                $.each(anItem, function (i, bean) {
+                    var divSpan = document.createElement("div");
+                    divSpan.setAttribute("class", "one_selected");
+                    if (str.indexOf((i + "")) != -1) {
+                        divSpan.innerHTML = "<div class='div_mei_span_yes'>" + (i + 1) + "</div>";
+                    } else {
+                        divSpan.innerHTML = "<a href='#selected'" + i + " style='color: #FFFFFF;text-decoration: none;'><div class='div_mei_span'>" + (i + 1) + "</div></a>";
+                    }
+
+                    divMei.appendChild(divSpan);
+
+                });
+                $(".div_buttom_selected").append(divMei);
+
+
+                $(".div_buttom_more").empty();
+                var divMei2 = document.createElement("div");
+                for (var i = 0; i < twoItem.length; i++) {
+                    var divSpan = document.createElement("div");
+                    if (str2.indexOf((i + "")) != -1) {
+                        divSpan.innerHTML = "<div class='div_mei_span_yes'>" + (i + 1) + "</div>";
+                    } else {
+                        divSpan.innerHTML = "<a href='#selected_two'" + i + " style='color: #FFFFFF;text-decoration: none;'><div class='div_mei_span'>" + (i + 1) + "</div></a>";
+                    }
+                    divMei2.appendChild(divSpan);
+                }
+                $(".div_buttom_more").append(divMei2);
+
+
+                //填空
+                $(".div_buttom_input").empty();
+                var divMei3 = document.createElement("div");
+                for (var i = 0; i < threeItem.length; i++) {
+                    var divSpan = document.createElement("div");
+                    if (str3.indexOf((i + "")) != -1) {
+                        divSpan.innerHTML = "<div class='div_mei_span_yes'>" + (i + 1) + "</div>";
+                    } else {
+                        divSpan.innerHTML = "<a href='#selected_three'" + i + " style='color: #FFFFFF;text-decoration: none;'><div class='div_mei_span'>" + (i + 1) + "</div></a>";
+                    }
+                    divMei3.appendChild(divSpan);
+                }
+                $(".div_buttom_input").append(divMei3);
+            }
+        });
+    </script>
+
+</head>
+<body>
+<div class="div_all">
+    <div class="div_all_top">
+        <div class="div_all_title">2019年5月5日Android电商进阶月考模拟测试【出题人：李晓明】</div>
+        <div class="div_all_ke">
+            <span style="margin-left: 10%">专业阶段：电商项目进阶</span>
+            <span style="margin-left: 20%">时间：1小时</span>
+            <span style="margin-left: 20%;color: #d43c3c;">总分：100分</span>
+        </div>
+        <div class="div_all_ke">
+            <span style="margin-left: 5%">姓名(必填)：<input type="text" class="user_name"/></span>
+            <span style="margin-left: 5%">班级(选择)：<select class="select_class">
+                <option selected>Android_1610B</option>
+                <option>Android_1610A</option>
+                <option>Android_1610C</option>
+            </select></span>
+            <span style="margin-left: 5%">学号(必填)：<input type="text" class="user_student"/></span>
+            <span class="div_span_submit">提交</span>
+        </div>
+
+    </div>
+    <!--题-->
+    <div style="margin-top: 170px;">
+        <div style="margin-top:20px;background-color: #999999;height: 50px;width: 80%;margin-left: 10%;line-height: 50px;font-weight: bold;">
+            <span> &nbsp;&nbsp;&nbsp;&nbsp;一、单选题</span>
+        </div>
+        <!--选择题-->
+        <div class="div_all_selected">
+
+        </div>
+        <div style="margin-top:20px;background-color: #999999;height: 50px;width: 80%;margin-left: 10%;line-height: 50px;font-weight: bold;">
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;二、多选题</span>
+        </div>
+        <!--多选题-->
+        <div class="div_all_more">
+
+        </div>
+        <!--填空题-->
+        <div style="margin-top:20px;background-color: #999999;height: 50px;width: 80%;margin-left: 10%;line-height: 50px;font-weight: bold;">
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;三、填空题</span>
+        </div>
+        <div class="div_all_input">
+
+        </div>
+    </div>
+</div>
+
+<div class="div_buttom">
+    <div style="height: 20px;margin-top: 5px;margin-left: 5px;line-height: 20px;font-size: 14px;font-weight: bold;color: #FFFFFF;">
+        单选题
+    </div>
+    <div class="div_buttom_selected"></div>
+    <div style="height: 20px;margin-top: 5px;margin-left: 5px;line-height: 20px;font-size: 14px;font-weight: bold;color: #FFFFFF;">
+        多选题
+    </div>
+    <div class="div_buttom_more"></div>
+    <div style="height: 20px;margin-top: 5px;margin-left: 5px;line-height: 20px;font-size: 14px;font-weight: bold;color: #FFFFFF;">
+        填空题
+    </div>
+    <div class="div_buttom_input"></div>
+</div>
+
+</body>
+</html>

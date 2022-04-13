@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .div_all {
+            width: 100%;
+            height: 100%;
+        }
+
+        .div_all_head {
+            width: 100%;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+            font-size: 32px;
+            color: #FFFFFF;
+            font-weight: bold;
+            background-color: #222222;
+            border-bottom: 2px solid #FFFFFF;
+        }
+
+        .div_all_buttom {
+            background-color: #222222;
+            height: 1000px;
+        }
+
+        .div_all_buttom div {
+            float: left;
+
+        }
+
+        .div_all_buttom_left {
+            width: 28%;
+            height: 100%;
+            border-right: 2px solid #FFFFFF;
+        }
+
+        .div_all_buttom_right {
+            width: 70%;
+            height: 100%;
+        }
+
+        .div_fen_item {
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            color: #FFFFFF;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .div_fen_item:hover {
+            color: #d43c3c;
+        }
+    </style>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+    <script>
+        $(document).ready(function () {
+            var arr = [1, 2, 3, 4, 5, 6, 7];
+            var click = 0;
+            $.each(arr, function (i, bean) {
+                var nodeDiv = document.createElement("div");
+                nodeDiv.setAttribute("class", "div_fen_item");
+                nodeDiv.innerHTML = "000000";
+                $(".div_all_buttom_left").prepend(nodeDiv);
+                $(".div_fen_item").click(function () {
+                    if (click == 0) {
+                        var nodes=$(".div_all_buttom_left").childNodes;
+                        for (var j = 0; j < nodes.length; j++) {
+                            if(j==i){
+                                nodes[j].;
+                            }
+                        }
+
+                        click++;
+                    }
+                    setTimeout(function () {
+                        click = 0;
+                    }, 200);
+                });
+            });
+
+            var url = "../../../cert/vip_get_yue_all.php";
+            $.get(url, function (data, status) {
+                $(".div_all_buttom_left").empty();
+                $.each(data, function (i, bean) {
+                    var nodeDiv = document.createElement("div");
+                    nodeDiv.setAttribute("class", "div_fen_item");
+                    nodeDiv.innerHTML = bean.fen_type;
+                    $(".div_all_buttom_left").prepend(nodeDiv);
+                })
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="div_all">
+    <div class="div_all_head">
+        考试成绩查询
+    </div>
+    <div class="div_all_buttom">
+        <div class="div_all_buttom_left">
+
+        </div>
+        <div class="div_all_buttom_right">
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
